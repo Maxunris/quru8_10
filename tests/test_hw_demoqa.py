@@ -1,7 +1,5 @@
-
 from quru8_10.pages.registration_page import RegistrationPage
 from quru8_10.data.users import User
-from selene import browser
 
 registration_page = RegistrationPage()
 
@@ -23,15 +21,8 @@ def test_student_registration_form():
                 city='Agra')
     registration_page.open()
 
-
     # WHEN
     registration_page.register(user)
 
     # THEN
     registration_page.user_should_registered(user)
-
-
-
-
-
-
