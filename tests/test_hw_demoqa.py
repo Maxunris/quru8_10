@@ -1,45 +1,34 @@
-import time
 
 from quru8_10.pages.registration_page import RegistrationPage
+from quru8_10.data.users import User
+from selene import browser
+
+registration_page = RegistrationPage()
 
 
-
-
-def test_registration_form():
-    registration_page = RegistrationPage()
+def test_student_registration_form():
+    user = User(first_name='Max',
+                last_name='Cheshire',
+                email='MaxCheshire@gmail.com',
+                gender='Male',
+                phone_number='7999123123',
+                month_of_birth='February',
+                year_of_birth='1998',
+                day_of_birth='26',
+                subject='English',
+                hobby='Sports, Reading',
+                picture='fier.webp',
+                current_address='Pyshkina-kolotushkina, Moscow, Russia',
+                state='Uttar Pradesh',
+                city='Agra')
     registration_page.open()
 
-    #wwhen
 
-    registration_page.fill_first_name('Max')
-    registration_page.fill_last_name('Cheshire')
-    registration_page.fill_email('MaxCheshire@gmail.com')
-    registration_page.choose_a_gender()
-    registration_page.fill_number_pelephone('7999123123')
-    registration_page.coose_data_of_birth(month='2', year='99', day='026')
-    registration_page.choose_subject('English')
-    registration_page.choose_hobby()
-    registration_page.donwload_page('fier.webp')
-    registration_page.current_adress('Pyshkina-kolotushkina, Moscow, Russia')
-    registration_page.choose_state('Uttar')
-    registration_page.choose_city('ag')
-    registration_page.submit_form()
+    # WHEN
+    registration_page.register(user)
 
-
-
-    registration_page.should_regustration_user(
-        "Max Cheshire",
-        "MaxCheshire@gmail.com",
-        "Male",
-        "7999123123",
-        "26 February,1998",
-        "English",
-        "Sports, Reading",
-        "fier.webp",
-        "Pyshkina-kolotushkina, Moscow, Russia",
-        "Uttar Pradesh Agra"
-    )
-
+    # THEN
+    registration_page.user_should_registered(user)
 
 
 
