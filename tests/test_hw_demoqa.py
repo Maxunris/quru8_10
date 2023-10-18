@@ -1,32 +1,33 @@
 import time
 
-from selene import browser, be, have
-import os
+from quru8_10.pages.registration_page import RegistrationPage
+
+
 
 
 def test_registration_form():
-    browser.open("/automation-practice-form")
+    registration_page = RegistrationPage()
+    registration_page.open()
 
-    browser.element("#firstName").type("Max")
-    browser.element("#lastName").type("Cheshire")
-    browser.element("#userEmail").type("MaxCheshire@gmail.com")
-    browser.element('[for="gender-radio-1"]').click()
-    browser.element("#userNumber").type("7999123123")
-    browser.element("#dateOfBirthInput").click()
-    browser.element('.react-datepicker__month-select').click().element('option[value="1"]').click()
-    browser.element('.react-datepicker__year-select').click().element('option[value="1998"]').click()
-    browser.element('.react-datepicker__day--026').click()
-    browser.element('#subjectsInput').type('Engl').press_enter()
-    browser.element('label[for="hobbies-checkbox-1"]').click()
-    browser.element('label[for="hobbies-checkbox-2"]').click()
-    browser.element('#uploadPicture').send_keys(os.path.abspath('picture/fier.webp'))
-    browser.element('#currentAddress').type('Pyshkina-kolotushkina, Moscow, Russia')
-    browser.element('#react-select-3-input').type('Utt').press_enter()
-    browser.element('#react-select-4-input').type('Lu').press_enter()
-    browser.element('#submit').execute_script('element.click()')
+    #wwhen
+
+    registration_page.fill_first_name('Max')
+    registration_page.fill_last_name('Cheshire')
+    registration_page.fill_email('MaxCheshire@gmail.com')
+    registration_page.choose_a_gender()
+    registration_page.fill_number_pelephone('7999123123')
+    registration_page.coose_data_of_birth(month='2', year='99', day='026')
+    registration_page.choose_subject('English')
+    registration_page.choose_hobby()
+    registration_page.donwload_page('fier.webp')
+    registration_page.current_adress('Pyshkina-kolotushkina, Moscow, Russia')
+    registration_page.choose_state('Uttar')
+    registration_page.choose_city('ag')
+    registration_page.submit_form()
 
 
-    browser.all(".table-dark>tbody>tr>td:nth-child(2)").should(have.texts(
+
+    registration_page.should_regustration_user(
         "Max Cheshire",
         "MaxCheshire@gmail.com",
         "Male",
@@ -36,9 +37,8 @@ def test_registration_form():
         "Sports, Reading",
         "fier.webp",
         "Pyshkina-kolotushkina, Moscow, Russia",
-        "Uttar Pradesh Lucknow"
-    ))
-    browser.element("#closeLargeModal").should(be.visible).click()
+        "Uttar Pradesh Agra"
+    )
 
 
 
